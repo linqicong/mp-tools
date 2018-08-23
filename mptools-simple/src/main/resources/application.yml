@@ -1,0 +1,12 @@
+server:
+  port: 8088
+wechat:
+  mp-tools:
+    appid:
+    secret:
+    host: 127.0.0.1
+    password:
+    port: 6379
+    timeout: 3000
+    database: 0
+
