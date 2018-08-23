@@ -23,7 +23,7 @@ mp-tools  已完成30%
         WechatMpApi wechatMpApi = new WechatMpApi(wechatMpConfigs);
         wechatMpApi.userApi().getUserInfo(openId,null);
 ```
-## 方式二：使用配置文件-wechat-mp.properties
+## 方式二：使用配置文件 wechat-mp.properties
 ```
 mp_appid =
 mp_secret = 
