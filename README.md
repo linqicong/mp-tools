@@ -8,8 +8,8 @@ mp-tools  已完成30%
 * UserApi 
 * ......
 
-## 使用方法
-maven
+## maven
+
 ```xml
         <dependency>
             <groupId>com.boal.wechat</groupId>
@@ -17,13 +17,13 @@ maven
             <version>1.0-SNAPSHOT</version>
         </dependency>
 ```
-方式一：直接调用
+## 方式一：直接调用
 ```java
         WechatMpConfigs wechatMpConfigs = WechatMpConfigs.init("appid","secret","127.0.0.1",6379,3000,null,0);
         WechatMpApi wechatMpApi = new WechatMpApi(wechatMpConfigs);
         wechatMpApi.userApi().getUserInfo(openId,null);
 ```
-方式二：使用配置文件-wechat-mp.properties
+## 方式二：使用配置文件-wechat-mp.properties
 ```
 mp_appid =
 mp_secret = 
@@ -38,7 +38,14 @@ redis_database = 0
         WechatMpApi wechatMpApi = new WechatMpApi(wechatMpConfigs);
         wechatMpApi.userApi().getUserInfo(openId,null);
 ```
-方式三：使用Spring-boot-starter
+## 方式三：使用Spring-boot-starter
+```xml
+         <dependency>
+            <groupId>com.boal.wechat</groupId>
+            <artifactId>mptools-spring-boot-starter</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+```
 ```xml
 wechat:
   mp-tools:
