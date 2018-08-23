@@ -1,13 +1,9 @@
-/**
- * Alipay.com Inc.
- * Copyright (c) 2004-2012 All Rights Reserved.
- */
 package com.boal.wechat.exception;
 
 
 /**
  * 
- * @author runzhi
+ * @author Boal Lin
  */
 public class WechatMpApiException extends RuntimeException {
 

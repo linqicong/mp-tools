@@ -1,14 +1,10 @@
-/**
- * Alipay.com Inc.
- * Copyright (c) 2004-2012 All Rights Reserved.
- */
 package com.boal.wechat.util;
 
 import java.io.*;
 
 /**
  * 
- * @author runzhi
+ * @author Boal Lin
  */
 public class StreamUtil {
     private static final int DEFAULT_BUFFER_SIZE = 8192;
