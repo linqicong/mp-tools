@@ -17,13 +17,13 @@ maven
             <version>1.0-SNAPSHOT</version>
         </dependency>
 ```
-直接调用
+方式一：直接调用
 ```java
         WechatMpConfigs wechatMpConfigs = WechatMpConfigs.init("appid","secret","127.0.0.1",6379,3000,null,0);
         WechatMpApi wechatMpApi = new WechatMpApi(wechatMpConfigs);
         wechatMpApi.userApi().getUserInfo(openId,null);
 ```
-使用配置文件-wechat-mp.properties
+方式二：使用配置文件-wechat-mp.properties
 ```
 mp_appid =
 mp_secret = 
@@ -33,7 +33,12 @@ redis_port = 6379
 redis_timeout = 3000
 redis_database = 0
 ```
-使用Spring-boot-starter
+```java
+        WechatMpConfigs wechatMpConfigs = WechatMpConfigs.init();
+        WechatMpApi wechatMpApi = new WechatMpApi(wechatMpConfigs);
+        wechatMpApi.userApi().getUserInfo(openId,null);
+```
+方式三：使用Spring-boot-starter
 ```xml
 wechat:
   mp-tools:
