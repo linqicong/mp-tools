@@ -11,11 +11,11 @@ mp-tools  已完成30%
 ## maven
 
 ```xml
-        <dependency>
-            <groupId>com.boal.wechat</groupId>
-            <artifactId>mp-tools</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+<dependency>
+    <groupId>com.boal.wechat</groupId>
+    <artifactId>mp-tools</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</dependency>
 ```
 ## 方式一：直接调用
 ```java
@@ -40,11 +40,11 @@ redis_database = 0
 ```
 ## 方式三：使用Spring-boot-starter
 ```xml
-         <dependency>
-            <groupId>com.boal.wechat</groupId>
-            <artifactId>mptools-spring-boot-starter</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+ <dependency>
+    <groupId>com.boal.wechat</groupId>
+    <artifactId>mptools-spring-boot-starter</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</dependency>
 ```
 ```xml
 wechat:
