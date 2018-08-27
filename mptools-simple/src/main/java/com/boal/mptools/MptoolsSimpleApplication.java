@@ -1,6 +1,8 @@
 package com.boal.mptools;
 
 import com.boal.wechat.api.WechatMpApi;
+import com.boal.wechat.config.WechatMpConfigs;
+import com.boal.wechat.response.user.UserInfoResponse;
 import com.boal.wechat.util.GsonFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -29,6 +31,22 @@ public class MptoolsSimpleApplication {
 
     @RequestMapping("getUserInfo")
     public String getUserInfo(String openId){
-       return GsonFactory.getGson().toJson(wechatMpApi.userApi().getUserInfo(openId,null));
+       UserInfoResponse response = wechatMpApi.userApi().getUserInfo(openId,null);
+       return GsonFactory.getGson().toJson(response);
+    }
+
+    @RequestMapping("getUserInfo2")
+    public String getUserInfo2(String openId){
+        WechatMpConfigs wechatMpConfigs = WechatMpConfigs.init("appid","secret","127.0.0.1",6379,3000,null,0);
+        WechatMpApi wechatMpApi = new WechatMpApi(wechatMpConfigs);
+        wechatMpApi.userApi().getUserInfo(openId,null);
+        return GsonFactory.getGson().toJson(wechatMpApi.userApi().getUserInfo(openId,null));
+    }
+    @RequestMapping("getUserInfo3")
+    public String getUserInfo3(String openId){
+        WechatMpConfigs wechatMpConfigs = WechatMpConfigs.init();
+        WechatMpApi wechatMpApi = new WechatMpApi(wechatMpConfigs);
+        wechatMpApi.userApi().getUserInfo(openId,null);
+        return GsonFactory.getGson().toJson(wechatMpApi.userApi().getUserInfo(openId,null));
     }
 }

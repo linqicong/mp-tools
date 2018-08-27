@@ -14,7 +14,10 @@ import java.util.List;
  * @author Boal Lin
  * @version 1.0
  */
-public class UserGetByTagResponse extends BaseResponse {
+public class BlackListResponse extends BaseResponse {
+
+
+    private int total;
 
     private int count;
 
@@ -47,10 +50,19 @@ public class UserGetByTagResponse extends BaseResponse {
         this.nextOpenid = nextOpenid;
     }
 
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
     @Override
     public String toString() {
-        return "UserGetByTagResponse{" +
-                "count=" + count +
+        return "BlackListResponse{" +
+                "total=" + total +
+                ", count=" + count +
                 ", openid=" + openid +
                 ", nextOpenid='" + nextOpenid + '\'' +
                 "} " + super.toString();

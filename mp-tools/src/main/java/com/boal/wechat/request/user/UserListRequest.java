@@ -5,6 +5,7 @@ import com.boal.wechat.model.User;
 import com.boal.wechat.request.BaseRequest;
 import com.boal.wechat.response.user.UserGetByTagResponse;
 import com.boal.wechat.response.user.UserInfoResponse;
+import com.boal.wechat.response.user.UserListResponse;
 import com.boal.wechat.util.GsonFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -22,9 +23,9 @@ import java.util.function.Function;
  * @author Boal Lin
  * @version 1.0
  */
-public class UserInfoRequest extends BaseRequest<UserInfoResponse> {
+public class UserListRequest extends BaseRequest<UserListResponse> {
 
-    private String url = "https://api.weixin.qq.com/cgi-bin/user/info";
+    private String url = "https://api.weixin.qq.com/cgi-bin/user/get";
 
     private PostMethod postMethod = PostMethod.GET;
 
@@ -42,8 +43,8 @@ public class UserInfoRequest extends BaseRequest<UserInfoResponse> {
     }
 
     @Override
-    public Class<UserInfoResponse> getResponseClass() {
-        return UserInfoResponse.class;
+    public Class<UserListResponse> getResponseClass() {
+        return UserListResponse.class;
     }
 
     @Override
@@ -58,64 +59,48 @@ public class UserInfoRequest extends BaseRequest<UserInfoResponse> {
 
 
     @Override
-    public Function<String, UserInfoResponse> getConverterFunction(){
+    public Function<String, UserListResponse> getConverterFunction(){
         Gson gson = GsonFactory.getGson();
         JsonParser jsonParser = GsonFactory.getJsonParser();
-        return new Function<String, UserInfoResponse>() {
+        return new Function<String, UserListResponse>() {
             @Override
-            public UserInfoResponse apply(String s) {
-                UserInfoResponse response = gson.fromJson(s,getResponseClass());
-                User user = gson.fromJson(s,User.class);
-                response.setUser(user);
+            public UserListResponse apply(String s) {
+
+                UserListResponse response = gson.fromJson(s,getResponseClass());
+                if (response.isSuccess() && response.getCount()>0){
+                    JsonObject json = jsonParser.parse(s).getAsJsonObject();
+                    response.setOpenid(gson.fromJson(json.getAsJsonObject("data").get("openid"), List.class));
+                }
                 return response;
             }
         };
     }
 
     public static class ParamContent {
-        @SerializedName("openid")
-        private String openId;
+        @SerializedName("next_openid")
+        private String nextOpenid;
 
-        @SerializedName("lang")
-        private String lang;
+        public String getNextOpenid() {
+            return nextOpenid;
+        }
+
+        public void setNextOpenid(String nextOpenid) {
+            this.nextOpenid = nextOpenid;
+        }
 
         @Override
         public String toString() {
             return "ParamContent{" +
-                    "openId='" + openId + '\'' +
-                    ", lang='" + lang + '\'' +
+                    "nextOpenid='" + nextOpenid + '\'' +
                     '}';
         }
-
-        public String getOpenId() {
-            return openId;
-        }
-
-        public void setOpenId(String openId) {
-            this.openId = openId;
-        }
-
-        public String getLang() {
-            return lang;
-        }
-
-        public void setLang(String lang) {
-            this.lang = lang;
-        }
-    }
-    public void setOpenId(String openId) {
-        this.paramContent.openId = openId;
     }
 
-    public String getLang() {
-        return this.paramContent.lang;
+    public void setNextOpenid(String nextOpenid) {
+        this.paramContent.nextOpenid = nextOpenid;
     }
 
-    public void setLang(String lang) {
-        this.paramContent.lang = lang;
-    }
-
-    public String getOpenId() {
-        return this.paramContent.openId;
+    public String getNextOpenid() {
+        return this.paramContent.nextOpenid;
     }
 }
