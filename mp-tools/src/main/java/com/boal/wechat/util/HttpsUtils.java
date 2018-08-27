@@ -174,7 +174,8 @@ public class HttpsUtils {
  
 		try {
 			httpPost.setConfig(requestConfig);
-			StringEntity stringEntity = new StringEntity(json.toString(), "UTF-8");// 解决中文乱码问题
+			// 解决中文乱码问题
+			StringEntity stringEntity = new StringEntity(json.toString(), "UTF-8");
 			stringEntity.setContentEncoding("UTF-8");
 			stringEntity.setContentType("application/json");
 			httpPost.setEntity(stringEntity);

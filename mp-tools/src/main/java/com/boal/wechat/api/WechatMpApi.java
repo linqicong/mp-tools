@@ -1,5 +1,6 @@
 package com.boal.wechat.api;
 
+import com.boal.wechat.api.impl.MenuApiImpl;
 import com.boal.wechat.api.impl.UserApiImpl;
 import com.boal.wechat.config.WechatMpConfigs;
 
@@ -15,14 +16,21 @@ public class WechatMpApi {
 
     private UserApi userApi;
 
+    private MenuApi menuApi;
+
     private WechatMpConfigs wechatMpConfigs;
 
     public WechatMpApi (WechatMpConfigs wechatMpConfigs){
         this.wechatMpConfigs = wechatMpConfigs;
         userApi = UserApiImpl.getInstance(this.wechatMpConfigs);
+        menuApi = MenuApiImpl.getInstance(this.wechatMpConfigs);
     }
 
     public UserApi userApi(){
         return userApi;
+    }
+
+    public MenuApi menuApi(){
+        return menuApi;
     }
 }

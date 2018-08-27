@@ -1,5 +1,6 @@
-package com.boal.wechat.response.user;
+package com.boal.wechat.response.menu;
 
+import com.boal.wechat.model.Menu;
 import com.boal.wechat.model.Tag;
 import com.boal.wechat.response.BaseResponse;
 
@@ -13,24 +14,23 @@ import java.util.List;
  * @author Boal Lin
  * @version 1.0
  */
-public class TagsGetResponse extends BaseResponse {
+public class MenuGetResponse extends BaseResponse {
 
 
-    private List<Tag> tags;
+    private List<Menu> button;
 
-
-    public List<Tag> getTags() {
-        return tags;
+    public List<Menu> getButton() {
+        return button;
     }
 
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
+    public void setButton(List<Menu> button) {
+        this.button = button;
     }
 
     @Override
     public String toString() {
         return "MenuGetResponse{" +
-                "tags=" + tags +
+                "button=" + button +
                 "} " + super.toString();
     }
 }

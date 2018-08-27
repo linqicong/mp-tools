@@ -54,6 +54,7 @@ public class RequestProcess {
     private  <T extends BaseResponse> T doProcess(BaseRequest<T> request,int retry){
         String url = getUrlWithAccessToken(request.getUrl());
         String result = null ;
+        System.out.println(request.toJsonString());
         if (request.getPostMethod()== PostMethod.GET){
             result = HttpsUtils.doGet(url,request.toMap());
         }else {
