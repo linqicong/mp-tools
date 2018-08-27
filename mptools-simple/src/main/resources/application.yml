@@ -2,8 +2,8 @@ server:
   port: 8088
 wechat:
   mp-tools:
-    appid:
-    secret:
+    appid: wx8a4be21b298b40c0
+    secret:  d4624c36b6795d1d99dcf0547af5443d
     host: 127.0.0.1
     password:
     port: 6379
