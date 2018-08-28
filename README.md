@@ -3,10 +3,12 @@
 
 
 ## 开发进度
-mp-tools  已完成35%
+mp-tools  已完成40%
 
 * UserApi 
 * MenuApi(个性化菜单除外) 
+* MessageApi
+* MediaApi
 * ......
 
 ## maven
