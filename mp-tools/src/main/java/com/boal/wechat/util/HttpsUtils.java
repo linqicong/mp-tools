@@ -1,11 +1,14 @@
 package com.boal.wechat.util;
 
 import com.boal.wechat.exception.WechatMpApiException;
+import com.boal.wechat.response.user.DownloadResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -15,7 +18,9 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
@@ -25,7 +30,7 @@ import org.apache.http.util.EntityUtils;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
 import java.security.cert.CertificateException;
@@ -190,7 +195,89 @@ public class HttpsUtils {
 		}
 		return httpStr;
 	}
- 
+	public static String doPost(String url, Map<String, Object> params, File file){
+		String apiUrl = url;
+		if (params != null){
+			StringBuffer param = new StringBuffer();
+			int i = 0;
+			for (String key : params.keySet()) {
+				if (i == 0 && url.indexOf("?") == -1)
+					param.append("?");
+				else
+					param.append("&");
+				param.append(key).append("=").append(params.get(key));
+				i++;
+			}
+			apiUrl += param;
+		}
+		CloseableHttpResponse httpResponse = null;
+		CloseableHttpClient httpClient = getHttpClient(apiUrl);
+		HttpPost httpPost = new HttpPost(apiUrl);
+		String httpStr = null;
+		try{
+			MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
+			multipartEntityBuilder.addBinaryBody("media",file);
+			HttpEntity httpEntity = multipartEntityBuilder.build();
+			httpPost.setEntity(httpEntity);
+			httpResponse = httpClient.execute(httpPost);
+			HttpEntity entity = httpResponse.getEntity();
+			httpStr = EntityUtils.toString(entity, "UTF-8");
+		} catch (IOException e) {
+			logger.error(e);
+			throw new WechatMpApiException(e.getMessage());
+		} finally {
+			doFinally(httpResponse);
+		}
+		return httpStr;
+
+	}
+
+	/**
+	 * 下载文件
+	 *
+	 * @param url
+	 */
+	public static DownloadResponse httpDownloadFile(String url,Map<String, Object> params) {
+		String apiUrl = url;
+		if (params != null){
+			StringBuffer param = new StringBuffer();
+			int i = 0;
+			for (String key : params.keySet()) {
+				if (i == 0 && url.indexOf("?") == -1)
+					param.append("?");
+				else
+					param.append("&");
+				param.append(key).append("=").append(params.get(key));
+				i++;
+			}
+			apiUrl += param;
+		}
+		String result = null;
+		HttpClient httpClient = getHttpClient(url);
+		HttpResponse response = null;
+		DownloadResponse downloadResponse = null;
+		try {
+			HttpGet httpGet = new HttpGet(apiUrl);
+			response = httpClient.execute(httpGet);
+			HttpEntity entity = response.getEntity();
+			InputStream is = entity.getContent();
+			ByteArrayOutputStream output = new ByteArrayOutputStream();
+			Header disposition = response.getFirstHeader("Content-disposition");
+			byte[] buffer = new byte[4096];
+			int r = 0;
+			while ((r = is.read(buffer)) > 0) {
+				output.write(buffer, 0, r);
+			}
+			downloadResponse = new DownloadResponse();
+			downloadResponse.setOutputStream(output);
+			downloadResponse.setFileName(disposition.getElements()[0].getParameter(0).getValue());
+		} catch (IOException e) {
+			logger.error(e);
+		}finally {
+			doFinally(response);
+		}
+		return downloadResponse;
+	}
 	/**
 	 * 创建SSL安全连接
 	 *

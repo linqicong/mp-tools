@@ -57,8 +57,12 @@ public class RequestProcess {
         System.out.println(request.toJsonString());
         if (request.getPostMethod()== PostMethod.GET){
             result = HttpsUtils.doGet(url,request.toMap());
-        }else {
+        }else if (request.getPostMethod() == PostMethod.POST){
             result =  HttpsUtils.doPost(url,request.toJsonString());
+        }else if (request.getPostMethod() == PostMethod.DOWNLOAD_FILE){
+            return (T) HttpsUtils.httpDownloadFile(url,request.toMap());
+        } else {
+            result = HttpsUtils.doPost(url,request.toMap(),request.getFile());
         }
         final String r1 = result;
         T responseBody = Converter.toResponse(result, request.getConverterFunction());

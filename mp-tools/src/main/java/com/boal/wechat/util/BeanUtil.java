@@ -1,5 +1,6 @@
 package com.boal.wechat.util;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.beans.BeanInfo;
@@ -34,8 +35,12 @@ public class BeanUtil {
                 if (!"class".equals(key)) {
                     Field field = bean.getClass().getDeclaredField(key);
                     SerializedName jsonField = field.getAnnotation(SerializedName.class);
+                    Expose expose = field.getAnnotation(Expose.class);
                     if (jsonField != null) {
                         key = jsonField.value();
+                    }
+                    if (expose != null && !expose.serialize()){
+                        continue;
                     }
                     Method getter = property.getReadMethod();
                     Object value = getter.invoke(bean);

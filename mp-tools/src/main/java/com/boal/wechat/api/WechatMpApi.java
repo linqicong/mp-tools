@@ -1,5 +1,6 @@
 package com.boal.wechat.api;
 
+import com.boal.wechat.api.impl.MediaApiImpl;
 import com.boal.wechat.api.impl.MenuApiImpl;
 import com.boal.wechat.api.impl.MessageApiImpl;
 import com.boal.wechat.api.impl.UserApiImpl;
@@ -21,6 +22,8 @@ public class WechatMpApi {
 
     private MessageApi messageApi;
 
+    private MediaApi mediaApi;
+
     private WechatMpConfigs wechatMpConfigs;
 
     public WechatMpApi (WechatMpConfigs wechatMpConfigs){
@@ -28,6 +31,7 @@ public class WechatMpApi {
         userApi = UserApiImpl.getInstance(this.wechatMpConfigs);
         menuApi = MenuApiImpl.getInstance(this.wechatMpConfigs);
         messageApi = MessageApiImpl.getInstance(this.wechatMpConfigs);
+        mediaApi = MediaApiImpl.getInstance(this.wechatMpConfigs);
     }
 
     public UserApi userApi(){
@@ -40,5 +44,9 @@ public class WechatMpApi {
 
     public MessageApi messageApi(){
         return messageApi;
+    }
+
+    public MediaApi mediaApi(){
+        return mediaApi;
     }
 }

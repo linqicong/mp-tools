@@ -7,6 +7,7 @@ import com.boal.wechat.util.BeanUtil;
 import com.boal.wechat.util.GsonFactory;
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -46,6 +47,10 @@ public abstract class BaseRequest<T extends BaseResponse> {
             return null;
        }
         return BeanUtil.transBeanToMap(this.getParamContent(),true);
+    }
+
+    public File getFile(){
+        return null;
     }
     /**
      * 得到当前API的响应结果类型
