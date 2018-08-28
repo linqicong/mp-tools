@@ -44,6 +44,7 @@ public class TextMsg extends BasicMsg {
             this.content = content;
         }
     }
+
     public String getContent() {
         return this.paramContent.content;
     }

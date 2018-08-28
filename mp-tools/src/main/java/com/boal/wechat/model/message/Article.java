@@ -1,10 +1,9 @@
 package com.boal.wechat.model.message;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
- * 图文内容
  *
- * @author 凡梦星尘(elkan1788@gmail.com)
- * @since 2.0
  */
 public class Article {
 
@@ -21,6 +20,7 @@ public class Article {
      * </p>
      * 较好的效果为大图360*200,小图200*200
      */
+    @SerializedName("picurl")
     private String picUrl;
     /**
      * 点击图文消息跳转链接

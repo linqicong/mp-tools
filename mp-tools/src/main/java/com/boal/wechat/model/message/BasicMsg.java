@@ -71,7 +71,6 @@ public class BasicMsg {
     public void setMsgId(long msgId) {
         this.msgId = msgId;
     }
-
     @Override
     public String toString() {
         return "BasicMsg{" +

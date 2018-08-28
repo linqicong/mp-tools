@@ -1,7 +1,8 @@
 package com.boal.wechat.model.message;
 
 
-import java.util.Map;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * <br/>
  * <br/>
@@ -12,18 +13,7 @@ import java.util.Map;
  */
 public class VoiceMsg extends BasicMsg {
 
-    /**
-     * 语音消息媒体id,可以调用多媒体文件下载接口拉取数据
-     */
-    private String mediaId;
-    /**
-     * 语音格式,如amr,speex等
-     */
-    private String format;
-    /**
-     * 语音识别结果,UTF8编码
-     */
-    private String recognition;
+
 
     public VoiceMsg() {
         super();
@@ -31,30 +21,40 @@ public class VoiceMsg extends BasicMsg {
     }
 
 
+    @SerializedName("voice")
+    private ParamContent paramContent = new ParamContent();
+
+
+    public ParamContent getParamContent() {
+        return paramContent;
+    }
+
+    public static class ParamContent {
+        /**
+         * 图片消息媒体id，可以调用多媒体文件下载接口拉取数据
+         */
+        @SerializedName("media_id")
+        private String mediaId;
+
+
+        public String getMediaId() {
+            return mediaId;
+        }
+
+        public void setMediaId(String mediaId) {
+            this.mediaId = mediaId;
+        }
+
+    }
 
     public String getMediaId() {
-        return mediaId;
+        return this.paramContent.mediaId;
     }
 
     public void setMediaId(String mediaId) {
-        this.mediaId = mediaId;
+        this.paramContent.mediaId = mediaId;
     }
 
-    public String getFormat() {
-        return format;
-    }
-
-    public void setFormat(String format) {
-        this.format = format;
-    }
-
-    public String getRecognition() {
-        return recognition;
-    }
-
-    public void setRecognition(String recognition) {
-        this.recognition = recognition;
-    }
 
 
 }

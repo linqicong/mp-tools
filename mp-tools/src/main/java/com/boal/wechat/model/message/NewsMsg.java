@@ -2,7 +2,9 @@ package com.boal.wechat.model.message;
 
 
 import com.boal.wechat.util.StringUtils;
+import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,50 +17,63 @@ import java.util.List;
  */
 public class NewsMsg extends BasicMsg {
 
-    /**
-     * 图文消息个数,限制为10条以内
-     */
-    private int count;
-    /**
-     * 多条图文消息信息,默认第一个item为大图,
-     * </p>
-     * 注意:如果图文数超过10,则将会无响应
-     */
-    private List<Article> articles;
+
 
     public NewsMsg() {
         super();
         this.msgType = "news";
     }
+    @SerializedName("news")
+    private ParamContent paramContent = new ParamContent();
 
 
-    public NewsMsg(BasicMsg msg) {
-        this.msgType = "news";
+    public ParamContent getParamContent() {
+        return paramContent;
     }
 
+    public static class ParamContent {
+        /**
+         * 图文消息个数,限制为10条以内
+         */
+        private int count;
+        /**
+         * 多条图文消息信息,默认第一个item为大图,
+         * </p>
+         * 注意:如果图文数超过10,则将会无响应
+         */
+        private List<Article> articles = new ArrayList<>();
+
+        public int getCount() {
+            return count;
+        }
+
+        public void setCount(int count) {
+            this.count = count;
+        }
+
+        public List<Article> getArticles() {
+            return articles;
+        }
+
+        public void setArticles(List<Article> articles) {
+            this.articles = articles;
+        }
+    }
     public int getCount() {
-        return count;
+        return this.paramContent.count;
     }
 
-    protected void setCount(int count) {
-        this.count = count;
+    public void setCount(int count) {
+        this.paramContent.count = count;
     }
 
     public List<Article> getArticles() {
-//        if (!StringUtils.isEmpty(articles) && articles.size() > 10) {
-//            this.articles = articles.subList(0, 10);
-//            setCount(10);
-//        }
-//        else {
-//            this.setCount(articles.size());
-//        }
-        return articles;
+        return this.paramContent.articles;
     }
 
     public void setArticles(List<Article> articles) {
-        this.articles = articles;
+        this.paramContent.articles = articles;
     }
-
 
 
 }

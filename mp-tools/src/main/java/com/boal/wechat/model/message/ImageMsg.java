@@ -47,7 +47,6 @@ public class ImageMsg extends BasicMsg {
         }
 
     }
-
     public String getMediaId() {
         return this.paramContent.mediaId;
     }
